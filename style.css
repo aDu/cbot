@@ -1,0 +1,18 @@
+#chat_container {
+    width: 500px;
+    padding: 10px;
+    margin: 0 auto;
+}
+#chat_log {
+    padding: 10px;
+    outline: 1px solid black;
+    overflow-y: scroll;
+    height: 200px;
+    font-size: 26px;
+}
+#chat_input_container {
+    padding: 5px;
+}
+#chat_input {
+    width: 480px;
+}
