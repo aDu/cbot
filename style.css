@@ -1,7 +1,11 @@
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
 #chat_container {
-    width: 500px;
-    padding: 10px;
-    margin: 0 auto;
+    outline: 1px solid black;
+    margin: 15px;
 }
 #chat_log {
     padding: 10px;
@@ -11,8 +15,10 @@
     font-size: 26px;
 }
 #chat_input_container {
-    padding: 5px;
+    padding: 10px;
 }
 #chat_input {
-    width: 480px;
+    padding: 2px;
+    font-size: 14px;
+    width: 100%;
 }

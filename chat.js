@@ -1,5 +1,5 @@
 // Open websocket
-var ws = new WebSocket("ws://localhost:8000/");
+var ws = new WebSocket("ws://localhost:8000");
 
 // Close socket when window closes
 $(window).on('beforeunload', function(){
@@ -7,22 +7,20 @@ $(window).on('beforeunload', function(){
 });
 
 ws.onopen = function() {
-   ws.send("test");
+   ws.send("You are stupid.");
 };
 
-ws.onmessage = function (event)  { 
+ws.onmessage = function(event)  { 
    var message_received = event.data;
    chat_add_message("Bot", message_received);
 };
 
-/* Chat Utility Functions */
-
 // Add a message to the chat history
 function chat_add_message(name, message) {
-   chat_add("<b>"+name+"</b>: "+message+"<br />");
+   chat_add_html("<b>"+name+"</b>: "+message+"<br />");
 }
-// Add a line to the chat history
-function chat_add(html) {
+// Add HTML to the chat history
+function chat_add_html(html) {
    $("#chat_log").append(html);
    chat_scrolldown();
 }
