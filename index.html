@@ -2,10 +2,77 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Chat Bot</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="chat.js"></script>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="chat.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    var ws = new WebSocket("ws://localhost:8000");
+
+    // Close socket when window closes
+    $(window).on('beforeunload', function(){
+       ws.close();
+    });
+
+    ws.onerror= function(event) {
+        location.reload();
+    }
+
+    ws.onmessage = function(event)  { 
+       var message_received = event.data;
+       chat_add_message("Bot", message_received);
+    };
+
+    // Add a message to the chat history
+    function chat_add_message(name, message) {
+       chat_add_html("<b>"+name+"</b>: "+message+"<br />");
+    }
+    // Add HTML to the chat history
+    function chat_add_html(html) {
+       $("#chat_log").append(html);
+       chat_scrolldown();
+    }
+    // Scrolls the chat history to the bottom
+    function chat_scrolldown() {
+        $("#chat_log").animate({ scrollTop: $("#chat_log")[0].scrollHeight }, 500);
+    }
+
+    // If press ENTER, talk to chat and send message to server
+    $(function() {
+       $('#chat_input').on('keypress', function(event) {
+          if (event.which === 13 && $(this).val() != ""){
+             var message = $(this).val();
+             $(this).val("");
+             chat_add_message("User", message);
+             ws.send(message);
+          }
+       });
+    });
+</script>
+<style>
+    * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+    #chat_container {
+        outline: 1px solid black;
+        margin: 15px;
+    }
+    #chat_log {
+        padding: 10px;
+        outline: 1px solid black;
+        overflow-y: scroll;
+        height: 200px;
+        font-size: 26px;
+    }
+    #chat_input_container {
+        padding: 10px;
+    }
+    #chat_input {
+        padding: 2px;
+        font-size: 14px;
+        width: 100%;
+    }
+</style>
 </head>
 
 <body>
