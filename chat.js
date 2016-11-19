@@ -6,10 +6,6 @@ $(window).on('beforeunload', function(){
    ws.close();
 });
 
-ws.onopen = function() {
-   ws.send("You are stupid.");
-};
-
 ws.onmessage = function(event)  { 
    var message_received = event.data;
    chat_add_message("Bot", message_received);

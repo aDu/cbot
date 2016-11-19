@@ -1,2 +1,4 @@
 **/.DS_Store
-chat_config.py
+api_keys.py
+__pycache__
+__pycache__/*
