@@ -12,24 +12,36 @@
        ws.close();
     });
 
-    ws.onerror= function(event) {
+    ws.onerror = function(event) {
         location.reload();
     }
 
     ws.onmessage = function(event)  { 
-       var message_received = event.data;
-       chat_add_message("Bot", message_received);
+        var message_received = event.data;
+        chat_add_message(message_received, false);
     };
 
     // Add a message to the chat history
-    function chat_add_message(name, message) {
-       chat_add_html("<b>"+name+"</b>: "+message+"<br />");
+    function chat_add_message(message, isUser) {
+        var class_suffix = isUser ? '_user' : '';
+
+        var html = '\
+        <div class="chat_line">\
+            <div class="chat_bubble'+class_suffix+'">\
+              <div class="chat_triangle'+class_suffix+'"></div>\
+                '+message+'\
+            </div>\
+        </div>\
+        ';
+        chat_add_html(html);
     }
+
     // Add HTML to the chat history
     function chat_add_html(html) {
-       $("#chat_log").append(html);
-       chat_scrolldown();
+        $("#chat_log").append(html);
+        chat_scrolldown();
     }
+
     // Scrolls the chat history to the bottom
     function chat_scrolldown() {
         $("#chat_log").animate({ scrollTop: $("#chat_log")[0].scrollHeight }, 500);
@@ -41,7 +53,7 @@
           if (event.which === 13 && $(this).val() != ""){
              var message = $(this).val();
              $(this).val("");
-             chat_add_message("User", message);
+             chat_add_message(message, true);
              ws.send(message);
           }
        });
@@ -53,15 +65,21 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
     }
+    body {
+        font-family: Helvetica;
+    }
     #chat_container {
-        outline: 1px solid black;
-        margin: 15px;
+        overflow: hidden;
+        border-radius: 15px;
+        border: 1px solid black;
+        margin: 40px 80px 0px 80px;
     }
     #chat_log {
+        background-color: #718392;
         padding: 10px;
-        outline: 1px solid black;
+        border-bottom: 1px solid black;
         overflow-y: scroll;
-        height: 200px;
+        height: 300px;
         font-size: 26px;
     }
     #chat_input_container {
@@ -69,8 +87,47 @@
     }
     #chat_input {
         padding: 2px;
-        font-size: 14px;
+        font-size: 18px;
         width: 100%;
+    }
+
+    .chat_line {
+        overflow: hidden;
+        width: 100%;
+        margin: 2px 0 12px 0;
+    }
+    .chat_triangle, .chat_triangle_user {
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        left: -18px;
+        border-width: 0 18px 13px 0;
+        border-color: transparent #ffffff transparent transparent;
+    }
+    .chat_triangle_user {
+        left: auto;
+        right: -18px;
+        border-width: 13px 18px 0 0;
+        border-color: #234b9b transparent transparent transparent;
+    }
+    .chat_bubble, .chat_bubble_user {
+        position: relative;
+        float: left;
+        background-color: #FFF;
+        margin-top: 10px;
+        line-height: 35px;
+        padding: 10px 25px 10px 25px;
+        margin-left: 20px;
+        font-size: 27px;
+    }
+    .chat_bubble_user {
+        float: right;
+        margin-left: 0px;
+        margin-right: 20px;
+        background-color: #234b9b;
+        color: #FFF;
     }
 </style>
 </head>
