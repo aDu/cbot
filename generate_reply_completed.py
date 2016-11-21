@@ -12,7 +12,7 @@ def generateReply(message):
 
     # If error occurred getting POS
     if not pos:
-        return "I am not functioning at the moment."
+        return "I am not functioning at the moment. Perhaps check your API keys."
 
     # If user greeted
     if pos[0][0] in greetings:
@@ -49,7 +49,7 @@ def findYouAreJJ(pos):
         if e[0].lower() == 'you':
             foundYou = True
             continue
-        if e[0].lower() == 'are':
+        if e[0].lower() == 'are' and foundYou:
             foundAre = True
             continue
         if foundYou and not foundAre:
@@ -61,18 +61,18 @@ def findYouAreJJ(pos):
 
 # Returns JJ if sentence structure is I Am {word}+ JJ {word}+.
 def findIAmJJ(pos):
-    foundYou = False
-    foundAre = False
+    foundI = False
+    foundAm = False
 
     for e in pos:
         if e[0].lower() == 'i':
-            foundYou = True
+            foundI = True
             continue
-        if e[0].lower() == 'am':
-            foundAre = True
+        if e[0].lower() == 'am' and foundI:
+            foundAm = True
             continue
-        if foundYou and not foundAre:
+        if foundI and not foundAm:
             return False
-        if foundAre and e[1] == 'JJ':
+        if foundAm and e[1] == 'JJ':
             return e[0]
     return False
