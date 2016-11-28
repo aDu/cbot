@@ -3,6 +3,10 @@ A chatbot project, aimed at students building there first hack attempt using Mic
 
 The chatbot is far from realistic, but hopefully will give you more an idea of what Microsoft Cognitive Services can be used for.
 
+Tutorial Link: https://blogs.msdn.microsoft.com/uk_faculty_connection/2016/11/28/creating-my-first-chatbot-using-microsoft-cognitive-services-and-python/
+
+If you have any questions, please don't hesitate to email me at alanduu50[at]gmail[dot]com.
+
 #### Prerequisites:
 - Python 3 installed
 - https://github.com/dpallot/simple-websocket-server
