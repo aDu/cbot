@@ -9,4 +9,5 @@ If you have any questions, please don't hesitate to email me at alanduu50[at]gma
 
 #### Prerequisites:
 - Python 3 installed
-- https://github.com/dpallot/simple-websocket-server
+- Simple Websocket Server: https://github.com/dpallot/simple-websocket-server
+- Microsoft Cognitive Services (free): https://www.microsoft.com/cognitive-services/en-US/subscriptions?mode=NewTrials
